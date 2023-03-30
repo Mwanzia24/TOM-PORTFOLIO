@@ -1,0 +1,95 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flatacuties</title>
+    <link href="script.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Vote for the cutest Animal :)</h1>
+    <ul id="animal-list"></ul>
+    <div id="animal-details"></div>
+    <form id="add add-animal-form">
+    <h2>Add Animal</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="image-url">Image URL:</label>
+    <input type="text" id="image-url" name="image-url"><br>
+    <button type="submit">Submit Animal</button>
+  </form>
+         </form>
+    <script>
+// Get list of animal names
+fetch('http://localhost:3000/characters')
+        .then(response => response.json())
+        .then(data => {
+          const animalList = document.getElementById('animal-list');
+          data.forEach(animal => {
+            const listItem = document.createElement('li');
+            listItem.textContent = animal.name;
+            listItem.addEventListener('click', () => showAnimalDetails(animal));
+            animalList.appendChild(listItem);
+          });
+        });
+      // Display details for selected animal
+      function showAnimalDetails(animal) {
+        const animalDetails = document.getElementById('animal-details');
+        animalDetails.innerHTML = `
+          <h2>${animal.name}</h2>
+          <img src="${animal.image}" alt="${animal.name}">
+          <p>Votes: <span id="vote-count">${animal.votes}</span></p>
+          <button id="add-vote-button">Add a Vote</button>
+          <button id="reset-button">Reset votes</button>
+        `;
+        // Code for making an add votes button
+        const addVoteButton = document.getElementById('add-vote-button');
+        addVoteButton.addEventListener('click', () => {
+          const voteCount = document.getElementById('vote-count');
+          animal.votes++;
+          voteCount.textContent = animal.votes;
+        });
+        //Code for making reseting votes
+        const resetButton=document.getElementById('reset-button');
+        resetButton.addEventListener('click',()=> {
+            const voteCount=document.getElementById('vote-count');
+            animal.votes=0;
+            voteCount.textContent=animal.votes;
+        });
+      const addAnimalForm = document.getElementById('add-animal-form');
+        addAnimalForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // prevent form submission
+  // Get input values
+  const imageUrl = document.getElementById('image-url').value;
+  const name = document.getElementById('name').value;
+  // Create new animal object
+  const newAnimal = {
+    name: name,
+    image: imageUrl,
+    votes: 0
+    }
+    });
+    fetch('http://localhost:3000/characters', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body:
+    JSON.stringify(newAnimal)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const animalList = document.getElementById('animal-list');
+    const listItem = document.createElement('li');
+    listItem.textContent = data.name;
+    listItem.addEventListener('click', () => showAnimalDetails(data));
+    animalList.appendChild(listItem);
+    // Clear form inputs
+    addAnimalForm.reset();
+  })
+  .catch(error => console.error(error));
+};
+    </script>
+</body>
+</html>
