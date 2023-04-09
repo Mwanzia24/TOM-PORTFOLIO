@@ -4,44 +4,98 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flataculties</title>
-    <link rel="stylesheet" href="index.css">
-   
+    <title>Flatacuties</title>
+    <link href="index.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="Id"> 1
-          <img class="image" src="https://thumbs.gfycat.com/EquatorialIckyCat-max-1mb.gif" alt="Mr cute">
-          <div class="name">Mr cute</div>
-          <div class="vote-count">Votes: <span>0</span></div>
-          
-        </div>
-        <div class="Id"> 2
-            <img class="image" src="https://thumbs.gfycat.com/FatalInnocentAmericanshorthair-max-1mb.gif" alt="Mx monkey">
-            <div class="title">Mx monkey</div>
-          <div class="vote-count">Votes: <span>0</span></div>
-    </div>
-    </div>
-        <div class="Id"> 3
-             <img class="image" src="https://media2.giphy.com/media/20G9uNqE3K4dRjCppA/source.gif" alt="Ms zebra">
-             <div class="title">Ms zebra</div>
-         <div class="vote-count">Votes: <span>0</span></div>
-  </div>
-</div>
-        <div class="Id"> 4
-            <img class="image" src="http://bestanimations.com/Animals/Mammals/Cats/Lions/animated-lion-gif-11.gif" alt="Dr lion">
-            <div class="title">Dr lion</div>
-            <div class="vote-count">Votes: <span>0</span></div>
-</div>
-</div>
-        <div class="Id"> 5
-             <img class="image" src="https://media.giphy.com/media/ALalVMOVR8Qw/giphy.gif" " alt="Mme panda">
-             <div class="title">Mme panda</div>
-            <div class="vote-count">Votes: <span>0</span></div>
-</div> 
+    <h1>Vote for the cutest Animal :)</h1>
+    <ul id="animal-list"></ul>
+    <div id="animal-details"></div>
+    <form id="add-animal-form">
+        <h2>Add Animal</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br>
+      
+        <label for="image-url">Image URL:</label>
+        <input type="text" id="image-url" name="image-url"><br>
+           
+        <button type="submit">Submit Animal</button>
+      </form>
+    <script>
+// Get list of animal names
+fetch('http://localhost:3000/characters')
+        .then(response => response.json())
+        .then(data => {
+          const animalList = document.getElementById('animal-list');
+          data.forEach(animal => {
+            const listItem = document.createElement('li');
+            listItem.textContent = animal.name;
+            listItem.addEventListener('click', () => showAnimalDetails(animal));
+            animalList.appendChild(listItem);
+          });
+        });
 
-<script src="index.js"></script
-            
+      // Display details for selected animal
+      function showAnimalDetails(animal) {
+        const animalDetails = document.getElementById('animal-details');
+        animalDetails.innerHTML = `
+          <h2>${animal.name}</h2>
+          <img src="${animal.image}" alt="${animal.name}">
+          <p>Votes: <span id="vote-count">${animal.votes}</span></p>
+          <button id="add-vote-button">Add a Vote</button>
+          <button id="reset-button">Reset votes</button>
+        `;
+        // Code for making an add votes button
+        const addVoteButton = document.getElementById('add-vote-button');
+        addVoteButton.addEventListener('click', () => {
+          const voteCount = document.getElementById('vote-count');
+          animal.votes++;
+          voteCount.textContent = animal.votes;
+        });
+        //Code for making reseting votes
+        const resetButton=document.getElementById('reset-button');
+        resetButton.addEventListener('click',()=> {
+            const voteCount=document.getElementById('vote-count');
+            animal.votes=0;
+            voteCount.textContent=animal.votes;
+        });
     
+      const addAnimalForm = document.getElementById('add-animal-form');
+        addAnimalForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // prevent form submission
+  
+  // Get input values
+  const imageUrl = document.getElementById('image-url').value;
+  const name = document.getElementById('name').value;
+  
+  // Create new animal object
+  const newAnimal = {
+    name: name,
+    image: imageUrl,
+    votes: 0
+    }
+    });
+    fetch('http://localhost:3000/characters', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: 
+    JSON.stringify(newAnimal)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const animalList = document.getElementById('animal-list');
+    const listItem = document.createElement('li');
+    listItem.textContent = data.name;
+    listItem.addEventListener('click', () => showAnimalDetails(data));
+    animalList.appendChild(listItem);
+    
+    // Clear form inputs
+    addAnimalForm.reset();
+  })
+  .catch(error => console.error(error));
+};
+    </script>
 </body>
 </html>

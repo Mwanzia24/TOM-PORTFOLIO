@@ -1,108 +1,47 @@
-/* Define the layout of the app */
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+body{
+    background-image:radial-gradient( circle farthest-corner at 10% 20%,  rgb(117, 111, 148) 0.1%, rgba(182, 184, 114, 0.603) 99.8% );  
+  }
+  body, script, img{
+      text-align: center;
+      align-content:center;
+      appearance: center;
+  }
+  h2{
+      align-content: center;
   }
   
-  .card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  #animal-details{
+      align-items:center;
   }
+  #animal-list {
+      border: 5px solid rgb(0, 0, 0);
+      padding: 20px;
+      width: 50%;
+      margin: 0 auto;
+      background-color: rgb(101, 100, 160);
+    }
   
-  .image {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  
-  .title {
-    margin-top: 10px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .subtitle {
-    margin-top: 5px;
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  .button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #4285f4;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: #3367d6;
-  }
-  
-  /* Define the styles for the vote count */
-  .vote-count {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 5px;
-  }
-  
-  .vote-count span {
-    font-size: 24px;
-  }
-  
-  /* Define the styles for the results page */
-  .results {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .results-title {
-    font-size: 32px;
-    font-weight: bold;
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .results-subtitle {
-    font-size: 24px;
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .results-list {
-    margin-top: 20px;
-    list-style: none;
-    padding: 0;
-  }
-  
-  .results-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .results-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  
-  .results-name {
-    margin-left: 10px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
+    ul li  {     
+      display:inline-block;
+      padding:7px;
+      font-size: 24px;
+      font-family:Georgia, 'Times New Roman', Times, serif;
+      font-weight:bold;
+      color:white;
+    }
+    ul li:hover{
+      color:rgb(15, 29, 226);
+      transition:1s;
+      cursor: pointer;
+    }
+    h2,p,button{
+      text-align: center;
+    }
+    #add-vote-button{
+      color:red;
+      font-size:large;
+    }
+    #reset-button{
+      color:red;
+      font-size:large;
+    }
